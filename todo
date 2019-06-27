@@ -1,0 +1,20 @@
+[x] - Fix View Switching
+
+[x] - Fix Images not showing sometimes
+[x] - Make multiple instances work
+[x] - Add image meta-data
+[x] - If its on the same page make it so it doesn't delete the images (Bug Probaly somehting to do with background script)
+[x] - Konami Code Easter Egg (Noah)
+[x] - Multiple Image Saves 
+[x] - Fix Selection
+[ ] - Style the meta section
+[ ] - Make it so webm's work (better)
+[ ] - Add Image size slider (tile view)
+[ ] - Find a good speed for loading animation
+[ ] - Make it so you can right click to view in gallery
+[ ] - Add start and end gallery buttons
+[ ] - Mobile Views
+
+
+[ ] - Make it so that the plugin works better on a page on page basis
+like reddit, paheal.r34, flickr

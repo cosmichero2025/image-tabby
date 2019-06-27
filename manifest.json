@@ -9,10 +9,17 @@
         }
     ],
     "browser_action": {
-        "default_title": "Image-Tabby"
+        "default_title": "Image-Tabby",
+        "default_icon": "./popup/img/logo_48.png"
     },
     "background": {
-        "scripts": ["background.js"]
+        "scripts": ["background.js"],
+        "persistent": true
     },
-    "permissions": ["tabs"]
+    "icons": {
+        "16": "./popup/img/logo_16.png",
+        "48": "./popup/img/logo_48.png",
+        "128": "./popup/img/logo_128.png"
+    },
+    "permissions": ["http://*/*", "tabs", "downloads"]
 }
