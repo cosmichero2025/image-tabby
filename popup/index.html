@@ -14,7 +14,6 @@
 
   <body>
 
-
     <!-- loader -->
     <div class='loader'>
       <div class='loader-cover'></div>
@@ -25,6 +24,16 @@
     <!-- gallery -->
 
     <div class='gallery-container'>
+      <!-- context menu -->
+        <div class='menu context-gallery'>
+            <ul class='menu-options'>
+              <li class='menu-option'>Save</li>
+              <li class='menu-option'>Fullscreen</li>
+              <li class='menu-option'>Go To Start</li>
+              <li class='menu-option'>Go To End</li>
+            </ul>
+        </div>
+
       <div class='controls-container prev'>
         &#10094;
       </div>
@@ -38,9 +47,18 @@
       </div>
 
       <div class='functions-container'>
-        <i class='material-icons fullscreen-icon'>fullscreen</i>
-        <i class='material-icons save-icon'>save</i>
-        <i class='material-icons tile-icon'>view_comfy</i>
+
+        <div class='functions-arrow'>
+          <i class='material-icons'>
+            arrow_back_ios
+          </i>
+        </div>
+
+        <div class='functions-wrapper'>
+          <i class='material-icons fullscreen-icon'>fullscreen</i>
+          <i class='material-icons save-icon'>save</i>
+          <i class='material-icons tile-icon'>view_comfy</i>
+        </div>
       </div>
     </div>
 
@@ -48,7 +66,17 @@
 
     <!-- Tile View -->
 
-    <div class='tile-view hidden'>
+    <div class='tile-view tile-view--full'>
+        <div class='menu context-tile'>
+            <ul class='menu-options'>
+              <li class='menu-option menu-option--goto'>Go To In Gallery</li>
+              <li class='menu-option menu-option--save'>Save</li>
+              <li class='menu-option'>ef</li>
+              <li class='menu-option'>Save As</li>
+              <li class='menu-option'>Inspect</li>
+            </ul>
+          </div>
+          
       <div class='tile-container'>
         <div class='tile-nav'>
           <div class='tile-header'>
@@ -57,7 +85,6 @@
                 </h1>
                 <h2>reddit.com images</h2>
           </div>
-
   
           <div class='nav-controls'>
               <div class='range-container'>
@@ -74,31 +101,41 @@
             </div>
         </div>
 
-        <div class='tile-grid'>
-        </div>
-   
+        <div class='tile-grid tile-grid--3'></div>
       </div>
+
       <div class='meta-container'>
-        <h1 class='meta-title'>Image Details</h1>
-        <div class='meta-image-container'>
-          <img class='meta-image' src='./img/tabby.png' />
+        <div class='meta-nav-toggle'>
+            <i class='material-icons'>
+                arrow_back_ios
+            </i>
         </div>
-        
-        <h2 class='meta-detail img-origin'><a href='#' target='_blank'>chrome-extension://hbabmanginonilldhafijjpoebhkejpd/popup/img/tabby.png</a></h2>
-        <h2 class='meta-detail img-size'>2MB</h2>
 
-        <h2 class='meta-detail img-name'>image-tabby.png</h2>
+        <div class='meta-container-inner'>
+            <h1 class='meta-title'>Image Details</h1>
+            <div class='meta-image-container'>
+              <img class='meta-image' src='./img/tabby.png' />
+            </div>
+            
+            <h2 class='meta-detail img-origin'><a href='#' target='_blank'>chrome-extension://hbabmanginonilldhafijjpoebhkejpd/popup/img/tabby.png</a></h2>
+            <h2 class='meta-detail img-size'>2MB</h2>
+    
+            <h2 class='meta-detail img-name'>image-tabby.png</h2>
+    
+            <!-- <h2 class='meta-detail img-name'>cutecat.jpg</h2> -->
+            <h2 class='meta-detail img-dim'>960 x 716</h2>
+    
+            <h2 class='meta-detail'><span class='selected-num'>0</span> of <span class='selected-total'></span> selected</h2>
+            <button class='meta-btn'>Save Selected</button>
+        </div>
 
-        <!-- <h2 class='meta-detail img-name'>cutecat.jpg</h2> -->
-        <h2 class='meta-detail img-dim'>960 x 716</h2>
-
-        <h2 class='meta-detail'><span class='selected-num'>0</span> of <span class='selected-total'></span> selected</h2>
-        <button class='meta-btn'>Save Selected</button>
       </div>
 
     </div>
 
     <!-- End of Tile View -->
+
+
 
     <script src='./app.js'></script>
   </body>
