@@ -1,0 +1,38 @@
+[x] - Fix View Switching
+
+[x] - Fix Images not showing sometimes
+[x] - Make multiple instances work
+[x] - Add image meta-data
+[x] - If its on the same page make it lso it doesn't delete the images (Bug Probaly somehting to do with background script)
+[x] - Konami Code Easter Egg (Noah)
+[x] - Multiple Image Saves 
+[x] - Fix Selection 
+[x] - Style the meta section better
+[x] - Make it so webm's work (better)
+[x] - Add Image size slider (tile view)
+[x] - Add right click selection functionaity to tile view
+[x] - Make it so you can do a inspect like with the image-viewer extension
+[x] - Replace full screen functionality with zoom functionality
+[x] - Figure out why performance falls when you switch between gallery and tile views multiple times (It was duplicate event listeners)
+[x] - Make it so that the image is zoomed in based on the mouse position
+[x] - Make better webm controls
+[x] - Add more shortcut keys
+[x] - Finish context Menu
+[x] - Fix that range slider! (Something in the gallery code is fucking it!)
+
+// Work on this Sunday before launch
+[x] - Shift + Ctrl Shortcuts
+[x] - Add controls panel Info
+[x] - Make a warning if there are no images (POPUP HTML)
+
+// Monday
+[ ] - Fix the bug where it blinks when you zoom back out
+[ ] - Upload to github
+[ ] - Launch in morning
+
+// For Version Two
+[ ] - Refactor the code to be more effiecent and better organized: COMMENT
+[ ] - Add better stuff for unsupported sites
+[ ] - Honk Honk Easter Egg
+
+// https://i.imgur.com/EKb3WZH.jpg

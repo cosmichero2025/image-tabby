@@ -1,0 +1,21 @@
+.menu {
+    position: absolute;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 .4rem .5rem .3rem rgba(0, 0, 0, 0.2);
+    background-color: $tabby-white;
+  
+    .menu-options {
+  
+      .menu-option {
+        font-weight: 500;
+        font-size: 1.4rem;
+        padding: 1.5rem 1rem;
+        cursor: pointer;
+  
+        &:hover {
+          background: rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
+  }

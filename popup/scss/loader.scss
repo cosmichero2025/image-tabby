@@ -1,0 +1,68 @@
+.loader {
+  //display: none; // Here for dev purposes
+
+  z-index: 100;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: $tabby-dark;
+
+  &-cover {
+    z-index: 102;
+    background-color: $tabby-dark;
+    height: 0vh;
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: 0.6;
+    animation: loading 3s;
+  }
+
+  img {
+    z-index: 101;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 60vh;
+    max-width: 100%;
+    animation: loadingImg 0.8s 2.5s;
+  }
+
+  @keyframes loading {
+    0% {
+      height: 100vh;
+    }
+
+    30% {
+      height: 60vh;
+    }
+
+    60% {
+      height: 50vh;
+    }
+
+    80% {
+      height: 30vh;
+    }
+
+    100% {
+      height: 0vh;
+    }
+  }
+
+  @keyframes loadingImg {
+    0% {
+      top: 50%;
+    }
+
+    30% {
+      top: 70%;
+    }
+
+    100% {
+      top: -300%;
+    }
+  }
+}
