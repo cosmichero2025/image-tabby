@@ -10,17 +10,29 @@
 [x] - Style the meta section better
 [x] - Make it so webm's work (better)
 [x] - Add Image size slider (tile view)
-[ ] - Make it so you can right click to view in gallery
-[ ] - Add start and end gallery buttons
-[ ] - Make it so that the image is zoomed in based on the mouse position
-[ ] - Mobile Views
-[ ] - Add right click selection functionai ty to tile view
-[ ] - Make it so you can do a inspect like with the image-viewer extension
+[x] - Add right click selection functionaity to tile view
+[x] - Make it so you can do a inspect like with the image-viewer extension
 [x] - Replace full screen functionality with zoom functionality
-[ ] - Refactor the code to be more effiecent and better organized
-[ ] - Figure out why performance falls when you switch between gallery and tile views multiple times
+[x] - Figure out why performance falls when you switch between gallery and tile views multiple times (It was duplicate event listeners)
+[x] - Make it so that the image is zoomed in based on the mouse position
+[x] - Make better webm controls
+[x] - Add more shortcut keys
+[x] - Finish context Menu
+[x] - Fix that range slider! (Something in the gallery code is fucking it!)
 
-[x] - Make it so that the plugin works better on a page on page basis
-like reddit, paheal.r34, flickr
+// Work on this Sunday before launch
+[x] - Shift + Ctrl Shortcuts
+[x] - Add controls panel Info
+[x] - Make a warning if there are no images (POPUP HTML)
 
-LAUNCH
+// Monday
+[ ] - Fix the bug where it blinks when you zoom back out
+[ ] - Upload to github
+[ ] - Launch in morning
+
+// For Version Two
+[ ] - Refactor the code to be more effiecent and better organized: COMMENT
+[ ] - Add better stuff for unsupported sites
+[ ] - Honk Honk Easter Egg
+
+// https://i.imgur.com/EKb3WZH.jpg

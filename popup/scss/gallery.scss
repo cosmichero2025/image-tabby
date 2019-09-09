@@ -15,7 +15,7 @@
   color: $tabby-white;
   font-size: 3rem;
   z-index: 50;
-  transition: all 0.1s;
+  transition: all 0.1s; 
   cursor: pointer;
 
   &:hover {
@@ -32,6 +32,15 @@
 }
 
 .gallery-images {
+  width:100vw;
+  height:100vh;
+
+  .slide {
+    width:100vw;
+    height:100vh;
+    transform-origin: 0 0;
+  }
+
   img, video {
     position: absolute;
     top: 50%;
@@ -40,7 +49,6 @@
     height: auto;
     max-height: 70vh;
     max-width: 50vw;
-    transform-origin: 0 0;
   }
 
   img {
@@ -83,6 +91,7 @@
   left: 50%;
   transform: translateX(50%);
   bottom: 3rem;
+  transition: all .2s;
   animation: bounce 2s infinite;
 
   i {
@@ -102,7 +111,7 @@
   left: 50%;
   transform: translateX(-50%);
   height: 100px;
-  transition: all .4s ease-out;
+  transition: all .2s ease-out;
   
   i {
     color: $tabby-white;

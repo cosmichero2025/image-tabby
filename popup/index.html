@@ -19,21 +19,12 @@
       <div class='loader-cover'></div>
       <img src='./img/tabby.png' />
     </div>
+
     <!-- end of loader-->
 
     <!-- gallery -->
 
     <div class='gallery-container'>
-      <!-- context menu -->
-        <div class='menu context-gallery'>
-            <ul class='menu-options'>
-              <li class='menu-option'>Save</li>
-              <li class='menu-option'>Fullscreen</li>
-              <li class='menu-option'>Go To Start</li>
-              <li class='menu-option'>Go To End</li>
-            </ul>
-        </div>
-
       <div class='controls-container prev'>
         &#10094;
       </div>
@@ -42,9 +33,13 @@
         &#10095;
       </div>
 
+ 
+
       <div class='gallery-images'>
         <!-- <img src='./img/tabby.png' /> -->
       </div>
+
+      
 
       <div class='functions-container'>
 
@@ -67,13 +62,12 @@
     <!-- Tile View -->
 
     <div class='tile-view tile-view--full'>
+
         <div class='menu context-tile'>
             <ul class='menu-options'>
               <li class='menu-option menu-option--goto'>Go To In Gallery</li>
               <li class='menu-option menu-option--save'>Save</li>
-              <li class='menu-option'>ef</li>
-              <li class='menu-option'>Save As</li>
-              <li class='menu-option'>Inspect</li>
+              <li class='menu-option menu-option--info'>MetaInfo</li>
             </ul>
           </div>
           
@@ -83,15 +77,14 @@
               <h1>
                   Image Tabby <img src='./img/tabby.png' alt='logo'/>
                 </h1>
-                <h2>reddit.com images</h2>
+                <h2 class='original-site'></h2>
           </div>
   
           <div class='nav-controls'>
               <div class='range-container'>
-                  <input type='range' min='1' max='5' value='3' class='tile-range' />
+                  <input type='range' min='1' max='5' class='tile-range' />
                 </div>
       
-
               <i class='material-icons gallery-return'>
                 photo_library
               </i>
@@ -114,7 +107,7 @@
         <div class='meta-container-inner'>
             <h1 class='meta-title'>Image Details</h1>
             <div class='meta-image-container'>
-              <img class='meta-image' src='./img/tabby.png' />
+              <!-- <img class='meta-image' src='./img/tabby.png' /> -->
             </div>
             
             <h2 class='meta-detail img-origin'><a href='#' target='_blank'>chrome-extension://hbabmanginonilldhafijjpoebhkejpd/popup/img/tabby.png</a></h2>
@@ -127,6 +120,13 @@
     
             <h2 class='meta-detail'><span class='selected-num'>0</span> of <span class='selected-total'></span> selected</h2>
             <button class='meta-btn'>Save Selected</button>
+
+
+            <div class='controls-info-container'>
+              <h1>Ctl + Click &nbsp;&nbsp;&nbsp; = Select Single</h1>
+              <h1>Shift + Click = Select Multiple</h1>
+          </div>
+
         </div>
 
       </div>

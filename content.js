@@ -1,5 +1,5 @@
 const hostName = window.location.host;
-const currentUrl = hostName.substring(hostName.lastIndexOf('.', hostName.lastIndexOf('.') - 1) + 1)
+const currentUrl = hostName.substring(hostName.lastIndexOf('.', hostName.lastIndexOf('.') - 1) + 1);
 
 function urlRouter(url) {
   let fn;
@@ -77,6 +77,9 @@ function urlRouter(url) {
 chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
     if(req === 'bck-tabby') { 
       const imgData = urlRouter(currentUrl);
-      sendRes(imgData);
+      sendRes({ 
+        imgData: imgData,
+        pageUrl: currentUrl
+      });
     }
 });
