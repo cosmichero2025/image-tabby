@@ -87,12 +87,14 @@
 }
 
 .functions-arrow {
+  display: none;
   position: absolute;
   left: 50%;
   transform: translateX(50%);
   bottom: 3rem;
   transition: all .2s;
   animation: bounce 2s infinite;
+  
 
   i {
     color: $tabby-white;
