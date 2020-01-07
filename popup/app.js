@@ -23,6 +23,10 @@ window.addEventListener('load', () => {
     });
   }
 
+  // Helper functions to get the name or ext of an image from an url
+  const getName = str => str.split('/').pop().split('/').pop().split('.')[0];
+  const getExt = str => str.split('.').pop().toLowerCase();
+
   const gallery = document.querySelector('.gallery-images');
   const prev = document.querySelector('.prev');
   const next = document.querySelector('.next');
@@ -31,18 +35,21 @@ window.addEventListener('load', () => {
   const tileIcon = document.querySelector('.tile-icon');
 
   fullIcon.addEventListener('click', () => toggleFullScreen());
-  saveIcon.addEventListener('click', () => download(document.querySelectorAll('.gallery-images img, .gallery-images video source')[slideIndex - 1].src));
-  
+  saveIcon.addEventListener('click', () => download(
+      document.querySelectorAll(
+        '.gallery-images img, .gallery-images video source'
+      )[slideIndex - 1].src
+    )
+  );
+
+  // The code that is attatched to every img element in the 'gallery' view
   imgs.forEach(img => {
     if (!img.url) return;
-    const ext = img.url
-      .split('.')
-      .pop()
-      .toLowerCase();
-      
+    const ext = getExt(img.url);
+
     if (ext === 'webm') {
-      const target = document.createElement('div');
-      target.classList.add('slide');
+      const slide = document.createElement('div');
+      slide.classList.add('slide');
 
       const videoEl = document.createElement('video');
 
@@ -56,43 +63,42 @@ window.addEventListener('load', () => {
       sourceEl.setAttribute('type', 'video/webm');
       videoEl.appendChild(sourceEl);
 
-      target.appendChild(videoEl);
-      gallery.appendChild(target);
+      slide.appendChild(videoEl);
+      gallery.appendChild(slide);
     } else {
-      const container = document.querySelector('.gallery-images');
-      const target = document.createElement('div');
-      target.classList.add('slide');
+      const slide = document.createElement('div');
+      slide.classList.add('slide');
 
       // If the url doesn't have a an end ext or uses the ::data extension (Might not work)
       const imgEl = document.createElement('img');
       imgEl.setAttribute('src', img.url);
       imgEl.setAttribute('alt', img.fs);
 
-      target.appendChild(imgEl);
+      slide.appendChild(imgEl);
 
       // Zooming Into The Image
-      let zoom_point = {x:0,y:0};
+      let zoom_point = { x: 0, y: 0 };
       let scale = 1;
       const maxScale = 8;
       const factor = 0.3;
-      let pos = {x:0,y:0};
-      let zoom_target = {x:0,y:0};
+      let pos = { x: 0, y: 0 };
+      let zoom_target = { x: 0, y: 0 };
 
-      imgEl.addEventListener('mousewheel', (e) => {
+      imgEl.addEventListener('mousewheel', e => {
         e.preventDefault();
 
         // Ensures that zoom doesn't work in fullscreen
         let fullText = fullIcon.textContent.replace(/\s/g, '');
         if (fullText !== 'fullscreen') return;
 
-        if (target.style.display === 'block') {
-          const offset = container.getBoundingClientRect();
+        if (slide.style.display === 'block') {
+          const offset = gallery.getBoundingClientRect();
           zoom_point.x = e.pageX - offset.left;
           zoom_point.y = e.pageY - offset.top;
 
           let delta = e.deltaY;
 
-          delta = Math.max(-1, Math.min(1, delta)); 
+          delta = Math.max(-1, Math.min(1, delta));
 
           // determine the point on where the slide is zoomed in
           zoom_target.x = (zoom_point.x - pos.x) / scale;
@@ -106,7 +112,7 @@ window.addEventListener('load', () => {
           pos.x = -zoom_target.x * scale + zoom_point.x;
           pos.y = -zoom_target.y * scale + zoom_point.y;
 
-          target.style.transform = `translate(${pos.x}px, ${pos.y}px) scale(${scale}, ${scale})`;
+          slide.style.transform = `translate(${pos.x}px, ${pos.y}px) scale(${scale}, ${scale})`;
         }
       });
 
@@ -116,7 +122,9 @@ window.addEventListener('load', () => {
       let isDown = false;
 
       // If the user fullscreens the image this will reset its offset position
-      window.addEventListener('keydown', e => e.code == 'Space' ? offset = [] : null)
+      window.addEventListener('keydown', e =>
+        e.code == 'Space' ? (offset = []) : null
+      );
 
       imgEl.addEventListener('mousedown', e => {
           isDown = true;
@@ -126,24 +134,27 @@ window.addEventListener('load', () => {
 
       galleryView.addEventListener('mouseup', () => (isDown = false));
       galleryView.addEventListener('mousemove', e => {
-          e.preventDefault();
+        e.preventDefault();
 
-          if (isDown) {
-            mousePosition = {
-              x: e.clientX,
-              y: e.clientY
-            };
+        if (isDown) {
+          mousePosition = {
+            x: e.clientX,
+            y: e.clientY
+          };
 
-            imgEl.style.left = `${mousePosition.x + offset[0]}px`;
-            imgEl.style.top = `${mousePosition.y + offset[1]}px`;
-          }
-        },
-        true
-      );
+          imgEl.style.left = `${mousePosition.x + offset[0]}px`;
+          imgEl.style.top = `${mousePosition.y + offset[1]}px`;
+        }
+      }, true
+    );
 
-      gallery.appendChild(target);
+    // For the rotation of the image
+
+      gallery.appendChild(slide);
     }
   });
+
+  // End of Img code
 
   genImage();
 
@@ -180,11 +191,20 @@ window.addEventListener('load', () => {
   const functionsContainer = document.querySelector('.functions-container');
   const functionsArrow = document.querySelector('.functions-arrow');
 
+  chrome.storage.sync.get(['hasBeen'], res => {
+    if (!res.hasBeen) {
+      functionsArrow.style.display = 'block';
+    }
+  });
+
   functionsContainer.addEventListener('mouseover', () => {
     functionsArrow.style.bottom = '-5rem';
 
     // Fired once to remove the bouncing arrow
     setTimeout(() => (functionsArrow.style.display = 'none'), 300);
+
+    // Ensures that if the user is aware of the controls it will be gone forever afterwards
+    chrome.storage.sync.set({ hasBeen: true });
   });
 
   function toggleFullScreen() {
@@ -201,6 +221,8 @@ window.addEventListener('load', () => {
     } else {
       fullIcon.textContent = 'fullscreen';
       [...galImgs].forEach(img => {
+        img.style = '';
+
         img.style.maxWidth = '50vw';
         img.style.maxHeight = '70vh';
       });
@@ -235,9 +257,13 @@ window.addEventListener('load', () => {
     } else if (key === 83) {
       // The 'S' key for downloading the current image
       download(
-        document.querySelectorAll('.gallery-images img, .gallery-images video source')[slideIndex - 1].src
-      )
-    } else {return; }
+        document.querySelectorAll(
+          '.gallery-images img, .gallery-images video source'
+        )[slideIndex - 1].src
+      );
+    } else {
+      return;
+    }
   });
 
   /*
@@ -265,14 +291,9 @@ window.addEventListener('load', () => {
     div.setAttribute('data-slideIdx', i + 1);
 
     // Checks to see if its an image, gif or webm element
-
-    const ext = img.url
-      .split('.')
-      .pop()
-      .toLowerCase();
+    const ext = getExt(img.url);
 
     if (ext === 'webm') {
-
       div.style.position = 'relative';
 
       const videoEl = document.createElement('video');
@@ -285,7 +306,6 @@ window.addEventListener('load', () => {
       sourceEl.setAttribute('src', img.url);
       sourceEl.setAttribute('type', 'video/webm');
       videoEl.appendChild(sourceEl);
-      
 
       const controlsContainer = document.createElement('div');
       controlsContainer.classList.add('tile-video-controls');
@@ -305,18 +325,18 @@ window.addEventListener('load', () => {
       div.appendChild(controlsContainer);
       controlsContainer.appendChild(toggleIconContainer);
       toggleIconContainer.appendChild(toggleIcon);
-      
-      controlsContainer.addEventListener('click', e => {
-        if(e.shiftKey) {return;}
 
-        if(videoEl.paused || videoEl.ended) {
+      controlsContainer.addEventListener('click', e => {
+        if (e.shiftKey) return;
+
+        if (videoEl.paused || videoEl.ended) {
           toggleIcon.textContent = '';
           videoEl.play();
         } else {
           toggleIcon.textContent = 'play_arrow';
           videoEl.pause();
         }
-     });
+      });
     } else {
       const imgEl = document.createElement('img');
       imgEl.setAttribute('src', img.url);
@@ -352,21 +372,18 @@ window.addEventListener('load', () => {
 
   const saveOption = document.querySelector('.menu-option--save');
   saveOption.addEventListener('click', () => {
-    download(imgs[Number(currentSelection) - 1].url)
-  })
+    download(imgs[Number(currentSelection) - 1].url);
+  });
 
   const infoOption = document.querySelector('.menu-option--info');
   infoOption.addEventListener('click', e => {
-
     const t = document.querySelectorAll('.tile .tile-image');
-
     const tx = t[currentSelection];
+    const isVideo = tx.nodeName === 'VIDEO';
 
     let src = '';
 
-    const isVideo = tx.nodeName === 'VIDEO';
-
-    if(isVideo) {
+    if (isVideo) {
       src = tx.children[0].src;
     } else {
       src = tx.src;
@@ -375,23 +392,15 @@ window.addEventListener('load', () => {
     const metaData = {
       location: src,
       size: tx.getAttribute('alt'),
-      name: src
-        .split('/')
-        .pop()
-        .split('/')
-        .pop()
-        .split('.')[0],
-      ext: src
-        .split('.')
-        .pop()
-        .toLowerCase(),
-        width: isVideo ? tx.videoWidth : tx.naturalWidth,
-        height: isVideo ? tx.videoHeight : tx.naturalHeight,
-        isVideo: isVideo
-    }
+      name: getName(src),
+      ext: getExt(src),
+      width: isVideo ? tx.videoWidth : tx.naturalWidth,
+      height: isVideo ? tx.videoHeight : tx.naturalHeight,
+      isVideo: isVideo
+    };
 
     changeMeta(metaData);
-  })
+  });
 
   const galReturn = document.querySelector('.gallery-return');
   galReturn.addEventListener('click', () => switchView('gallery'));
@@ -405,7 +414,7 @@ window.addEventListener('load', () => {
 
     const isVideo = firstImg.nodeName === 'VIDEO';
 
-    if(isVideo) {
+    if (isVideo) {
       src = firstImg.children[0].src;
     } else {
       src = firstImg.src;
@@ -414,19 +423,11 @@ window.addEventListener('load', () => {
     const metaData = {
       location: src,
       size: firstImg.getAttribute('alt'),
-      name: src
-        .split('/')
-        .pop()
-        .split('/')
-        .pop()
-        .split('.')[0],
-      ext: src
-        .split('.')
-        .pop()
-        .toLowerCase(),
-        width: isVideo ? firstImg.videoWidth : firstImg.naturalWidth,
-        height: isVideo ? firstImg.videoHeight : firstImg.naturalHeight,
-        isVideo: isVideo
+      name: getName(src),
+      ext: getExt(src),
+      width: isVideo ? firstImg.videoWidth : firstImg.naturalWidth,
+      height: isVideo ? firstImg.videoHeight : firstImg.naturalHeight,
+      isVideo: isVideo
     };
 
     changeMeta(metaData);
@@ -449,7 +450,7 @@ window.addEventListener('load', () => {
     metaContainer.innerHTML = '';
 
     let imgPreview;
-    if(isVideo) {
+    if (isVideo) {
       imgPreview = document.createElement('video');
       imgPreview.controls = false;
       imgPreview.classList.add('meta-image');
@@ -547,27 +548,27 @@ window.addEventListener('load', () => {
         tile.classList.toggle('tile--active');
       }
 
-      if(e.shiftKey) {
+      if (e.shiftKey) {
         // Wipes the previous selected
-        if(selectFrom != null && selectTo != null) {
+        if (selectFrom != null && selectTo != null) {
           tiles.forEach(tiley => {
             const idx = tiley.children[0].dataset.slideidx;
-            if(selectFrom <= selectTo) {
-              if(idx >= selectFrom && idx <= selectTo) {
+            if (selectFrom <= selectTo) {
+              if (idx >= selectFrom && idx <= selectTo) {
                 tiley.classList.remove('tile--active');
               }
             } else {
-              if(idx <= selectFrom && idx >= selectTo) {
+              if (idx <= selectFrom && idx >= selectTo) {
                 tiley.classList.remove('tile--active');
               }
             }
-          })
+          });
 
           selectFrom = null;
           selectTo = null;
         }
 
-        if(selectFrom == null) {
+        if (selectFrom == null) {
           selectFrom = Number(e.target.dataset.slideidx);
           tile.classList.add('tile--active');
         } else {
@@ -578,16 +579,16 @@ window.addEventListener('load', () => {
           tiles.forEach(tilex => {
             const idx = tilex.children[0].dataset.slideidx;
 
-            if(selectFrom < selectTo) {
-              if(idx >= selectFrom && idx <= selectTo) {
+            if (selectFrom < selectTo) {
+              if (idx >= selectFrom && idx <= selectTo) {
                 tilex.classList.add('tile--active');
               }
             } else {
-              if(idx <= selectFrom && idx >= selectTo) {
+              if (idx <= selectFrom && idx >= selectTo) {
                 tilex.classList.add('tile--active');
               }
             }
-          })
+          });
         }
       }
 
@@ -595,7 +596,7 @@ window.addEventListener('load', () => {
       let src = '';
 
       const isVideo = imgEl.nodeName === 'VIDEO';
-      if(isVideo) {
+      if (isVideo) {
         src = imgEl.children[0].src;
       } else {
         src = imgEl.src;
@@ -604,16 +605,8 @@ window.addEventListener('load', () => {
       const metaData = {
         location: src,
         size: imgEl.getAttribute('alt'),
-        name: src
-          .split('/')
-          .pop()
-          .split('/')
-          .pop()
-          .split('.')[0],
-        ext: src
-          .split('.')
-          .pop()
-          .toLowerCase(),
+        name: getName(src),
+        ext: getExt(src),
         width: isVideo ? imgEl.videoWidth : imgEl.naturalWidth,
         height: isVideo ? imgEl.videoHeight : imgEl.naturalHeight,
         isVideo: isVideo
@@ -625,22 +618,63 @@ window.addEventListener('load', () => {
     });
   });
 
+  let isBulk = false;
+
   const metaBtn = document.querySelector('.meta-btn');
+  const metaCheck = document.querySelector('.meta-checkbox');
+
+  metaCheck.addEventListener('click', () => {
+    isBulk = !isBulk;
+  });
 
   metaBtn.addEventListener('click', () => {
     const currentImages = document.querySelectorAll('.tile--active');
     if (!currentImages) return;
 
-    currentImages.forEach(img => {
-      let image = img.children[0].src;
-      download(image);
-    });
+    if (isBulk) {
+      const zip = new JSZip();
+
+      let bulkUrls = [];
+      currentImages.forEach(img => {
+        bulkUrls.push(img.children[0].src);
+      });
+
+      function generateZIP() {
+        let count = 0;
+        let zipFilename = 'tabbyMedia.zip';
+
+        bulkUrls.forEach((url, i) => {
+          let filename = bulkUrls[i].match(/.*\/(.*)$/)[1];
+          // loading a file and add it in a zip file
+          JSZipUtils.getBinaryContent(url, (err, data) => {
+            if (err) throw err;
+
+            zip.file(filename, data);
+
+            count++;
+            if (count == bulkUrls.length) {
+              zip
+                .generateAsync({ type: 'blob' })
+                .then(content => saveAs(content, zipFilename));
+            }
+          });
+        });
+      }
+
+      // Creates the zip file full of the media that the user has selected
+      generateZIP();
+    } else {
+      currentImages.forEach(img => {
+        let image = img.children[0].src;
+        download(image);
+      });
+    }
   });
 
   const totalSpan = document.querySelector('.selected-total');
   totalSpan.innerHTML = tiles.length++;
 
-  // Tile View Context Menu
+  // ------ Tile View Context Menu ------
 
   const contextTile = document.querySelector('.context-tile');
 
@@ -664,6 +698,8 @@ window.addEventListener('load', () => {
   window.addEventListener('click', () => {
     toggleMenu('none');
   });
+
+  // ------ End Tile View Context Menu ------
 
   // Switchs between views
   function switchView(view, isUpdate) {
@@ -717,6 +753,9 @@ window.addEventListener('load', () => {
 
   // Easter egg Popup
   function noahScript() {
+    const audio = new Audio('./img/honk.mp3');
+    audio.play();
+
     const divEl = document.createElement('div');
     divEl.classList.add('easter-pop');
 
@@ -727,6 +766,7 @@ window.addEventListener('load', () => {
     divEl2.addEventListener('click', () => {
       divEl2.classList.add('easter-pop--exit');
       setTimeout(() => divEl.remove(), 1500);
+      audio.pause();
     });
 
     document.body.append(divEl);

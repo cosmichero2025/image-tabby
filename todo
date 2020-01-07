@@ -26,13 +26,22 @@
 [x] - Make a warning if there are no images (POPUP HTML)
 
 // Monday
-[ ] - Fix the bug where it blinks when you zoom back out
-[ ] - Upload to github
-[ ] - Launch in morning
+[x] - Upload to github
+[x] - Launch in morning
 
 // For Version Two
-[ ] - Refactor the code to be more effiecent and better organized: COMMENT
+[x] - Fix the bug where it blinks when you zoom back out
+[x] - Refactor the code to be more effiecent and better organized: COMMENT
+[x] - Honk Honk Easter Egg
+[x] - Make it stop
+
+[x] - Make so arrow only appears once
+[ ] - Add rotate controls
+[ ] - Add image effects (Look intro it) / (Greyscale shit like that) / Drawing
+[ ] - Improve the controls
+[ ] - Checkmark for images to be saved 1 by one or by bulk
+[ ] - Add better animations maybe?
 [ ] - Add better stuff for unsupported sites
-[ ] - Honk Honk Easter Egg
+[ ] - Add a controls / hotkey hover
 
 // https://i.imgur.com/EKb3WZH.jpg

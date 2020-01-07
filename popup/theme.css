@@ -221,6 +221,7 @@ ul {
   }
 }
 .functions-arrow {
+  display: none;
   position: absolute;
   left: 50%;
   transform: translateX(50%);

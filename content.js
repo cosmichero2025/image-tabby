@@ -13,7 +13,9 @@ function urlRouter(url) {
           url: `http:${img.getAttribute('href')}`,
           fs: img.children[0].alt
         };
-        imgs.push(imgItem);
+
+        // If an image is deleted on 4chan removes it from my list
+        if(imgItem.url !== 'http:null') imgs.push(imgItem);
       });
     },
     '4channel.org': function() {
@@ -23,7 +25,9 @@ function urlRouter(url) {
           url: `http:${img.getAttribute('href')}`,
           fs: img.children[0].alt
         };
-        imgs.push(imgItem);
+
+        // If an image is deleted on 4chan removes it from my list
+        if(imgItem.url !== 'http:null') imgs.push(imgItem);
       });
     },
     'paheal.net': function() {
@@ -64,7 +68,7 @@ function urlRouter(url) {
           imgs.push(imgItem);
         });
 
-        console.log('Default has been used here is the data: ', imgs);
+        console.log('Site not supported so generic code will be ran!');
     }
   };
 
@@ -74,8 +78,9 @@ function urlRouter(url) {
   return imgs;
 }
 
+// Listens for message from background.js
 chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
-    if(req === 'bck-tabby') { 
+    if(req === 'GET_IMGS') { 
       const imgData = urlRouter(currentUrl);
       sendRes({ 
         imgData: imgData,

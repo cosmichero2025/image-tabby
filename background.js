@@ -1,12 +1,12 @@
-// Initialze global images array
+// Initialze Global Img Array
 window.imgs = [];
 
 const { query, sendMessage, create } = chrome.tabs;
 
 chrome.browserAction.onClicked.addListener(tab => {
     query({active: true, currentWindow: true}, tabs => {
-        // Creates the popup page and sends image data
-        sendMessage(tabs[0].id, 'bck-tabby', res => {
+        // Sends a message to content.js and returns img data from current tab
+        sendMessage(tabs[0].id, 'GET_IMGS', res => {
             const { imgData } = res;
 
             window.imgs = imgData;
