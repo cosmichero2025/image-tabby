@@ -147,10 +147,7 @@ window.addEventListener('load', () => {
         }
       }, true
     );
-
-    // For the rotation of the image
-
-      gallery.appendChild(slide);
+    gallery.appendChild(slide);
     }
   });
 
@@ -653,9 +650,7 @@ window.addEventListener('load', () => {
 
             count++;
             if (count == bulkUrls.length) {
-              zip
-                .generateAsync({ type: 'blob' })
-                .then(content => saveAs(content, zipFilename));
+              zip.generateAsync({ type: 'blob' }).then(content => saveAs(content, zipFilename));
             }
           });
         });
